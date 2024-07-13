@@ -1,0 +1,37 @@
+{% extends "dnd_organizer_app/base.html" %}
+
+{% block content %}
+    {% if character.campaign%}
+        Kampania postaci: {{ character.campaign }}
+    {% else %}
+        Twoja postac nie zostala jeszcze przypisana do zadnej kampanii. By to zrobic kliknij 
+        <a href="{% url 'add-character-to-campaign' character.id %}">Tutaj</a>
+        .
+    {% endif %}
+    <ul>
+        <li>Imie postaci: {{ character.name }}</li>
+        <li>Klasa glowna: {{ character.get_main_class_name }}</li>
+        {% if character.subclass %}
+            <li>Podklasa: {{ character.get_subbclass_name  }}</li>
+        {% endif %}
+        <li>Poziom: {{ character.level }}</li>
+        {% if character.subclass %}
+            <li>Poziom podklasy: {{ character.level }}</li>
+        {% endif %}
+        <li>Punkty zycia: {{ character.hit_points }}</li>
+        <li>Klasa pancerza: {{ character.armor_class }}</li>
+        <li>Liczba hit dice'ow: {{ character.hit_dices_number }}</li>
+        {% if character.subclass %}
+            <li>Liczba hit dice'ow podklasy: {{ character.subclass_hit_dices_number }}</li>
+        {% endif %}
+        <li>Typ kosci: {{ character.get_main_hit_dice_type }}</li>
+        {% if character.subclass %}
+            <li>Typ kosci podklasy: {{ character.get_subclass_hit_dice_type }}</li>
+        {% endif %}
+        <li>Poziom: {{ character.level }}</li>
+        <li> dodac pozostale parametry pozniej :)</li>
+    </ul>
+    <button onclick="location.href='{% url 'edit-character' character.id %}'" type="button">Edytuj</button>
+
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "dnd_organizer_app/base.html" %}Zaloguj
+
+{% block content %}
+    {% include "dnd_organizer_app/base_form.html" %}
+    <p>
+        <a href="{% url 'registration' %}">lub zarejestruj sie</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "dnd_organizer_app/base.html" %}
+
+{% block content %}
+    <h2>{{ campaign.name }}</h2>
+    {% if upcoming_session %}
+        <p>Data twojej kolejnej sesji: {{ upcoming_session.session_date }}</p>
+    {% else %}
+        <a href="{% url 'plan_session' campaign.id %}"><button>Zaplanuj kolejna sesje</button></a>
+    {% endif %}
+    <p>Postaci w kampanii:</p>
+    <ul>
+        {% for character in characters %}
+            <li><a href="/character/{{ character.id }}">{{ character.name }} ({{ character.owner.username}})</a></li>
+        {% empty %}
+            <li>Gracze nie dodali jeszcze postaci</li>
+        {% endfor %}
+    </ul>
+    <p>Gracze w kampanii:</p>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }}
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <button type="submit">Usun gracza</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>Nie dodales jeszcze graczy</li>
+        {% endfor %}
+    </ul>
+    <button onclick="location.href='{% url 'add-players' campaign.id %}'" type="button">Dodaj graczy do kampanii</button>
+
+{% endblock %}

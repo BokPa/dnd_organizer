@@ -1,0 +1,32 @@
+{% extends "dnd_organizer_app/base.html" %}
+
+{% block content %}
+    <p>Lista prowadzonych przez ciebie kampanii:</p>
+    <ul>
+        {% for campaign in campaigns %}
+            <li><a href="/campaign/{{ campaign.id }}">{{ campaign.name }}</a></li>
+        {% empty %}
+            <li>Nie ma dostepnych kampanii.</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <button onclick="location.href='{% url 'add-campaign' %}'" type="button">Dodaj nowa kampanie</button>
+
+    </p>
+    <p>Twoje postaci:</p>
+    <ul>
+        {% for character in characters %}
+            {% if character.campaign.name %}
+                <li><a href="/character/{{ character.id }}">{{ character.name }} ({{ character.campaign.name }})</a></li>
+            {% else %}
+                <li><a href="/character/{{ character.id }}">{{ character.name }}</a></li>
+            {% endif %}
+        {% empty %}
+            <li>Nie posiadasz jeszcze zadnej postaci.</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <button onclick="location.href='{% url 'add-character' %}'" type="button">Dodaj nowa postac</button>
+    </p>
+
+{% endblock %}
